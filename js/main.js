@@ -3,7 +3,9 @@ $(function() {
     const tbody = $('.table tbody');
 
     function obterDados() {
-        $.ajax('https://jsonplaceholder.typicode.com/users', {
+        $.ajax(`api.openweathermap.org/data/2.5/weather?q=blumenau&appid=86682086e6145a8827d33bd6e66a398f`, {
+            async: true,
+            crossDomain: true,
             type : 'GET',
             beforeSend: function() {
                 $('.table').after('<p class="loading">Aguarde Carregando ... </p>');
@@ -22,45 +24,15 @@ $(function() {
         function mostrarDados(dados) {
             $.each(dados, function(i, el) {
                 tbody.append(`<tr class="linha">
-                                <th scope="row" class="id">${el.id}</th>
-                                <td class="nome">${el.name}</td>
-                                <td class="username">${el.username}</td>
-                                <td class="email">${el.email}</td>                         
+                                <th scope="row" class="current_temp">${el.main.temp}</th>
+                                <td class="temp_max">${el.main.temp_max}</td>
+                                <td class="temp_min">${el.main.temp_min}</td>
+                                <td class="humidity">${el.main.humidity}%</td>                         
                              </tr>
              `)
+             console.log(el)
             })
         }
-        
-        tbody.on('click', (e) => {
-            $linha = $(e.target).closest(".linha");
-            $("#name").val($linha.children(".nome").text());
-            $("#username").val($linha.children(".username").text());
-            $("#email").val($linha.children(".email").text());
-        })
-
-        $('form').on('submit', function(e){
-            e.preventDefault();
-            const dados = {};
-
-            $('form').find('input').each(function(i, el){
-                dados[el.id] = el.value;
-            })
-
-            $.ajax('https://jsonplaceholder.typicode.com/users', {
-                type: 'POST',
-                data: dados,
-                success: function(_dados){
-                    console.log(_dados)
-                    mostrarDados([_dados])
-                    alert('Sucesso!!!')
-                },
-                error: function(){
-                    alert('Erro!!!')
-                }
-            })            
-        })
     }
-
     obterDados();
-
 });
