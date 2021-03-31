@@ -26,9 +26,26 @@ $(function () {
         })
 
         function mostrarDados(dados) {
+<<<<<<< Updated upstream
             console.log(dados)
             info.append(`<div class="card" style="width: 18rem; margin: 0 auto; margin-top: 1%;">
                                 <img src="images/ceu_limpo.jpg" class="card-img-top" alt="...">
+=======
+<<<<<<< HEAD
+            setarImagem(dados);
+            console.log(dados)
+            if ($('#card-tempo').length === 1) {
+                $('#card-tempo').remove();
+            }
+
+            info.append(`<div id="card-tempo" class="card" style="width: 18rem; margin: 0 auto; margin-top: 1%;">
+                                <img src=${img} class="card-img-top" alt="...">
+=======
+            console.log(dados)
+            info.append(`<div class="card" style="width: 18rem; margin: 0 auto; margin-top: 1%;">
+                                <img src="images/ceu_limpo.jpg" class="card-img-top" alt="...">
+>>>>>>> f424ffb97bcc247648d4fed440a8afcb5b80132e
+>>>>>>> Stashed changes
                                 <div class="card-body">
                                     <div style="float: left;">
                                         <p style="font-weight: bold; font-size: 18px;">${dados.name}</p>
@@ -49,5 +66,17 @@ $(function () {
                             </div>
              `)
         }
+
+        function setarImagem(dados){
+            description = dados.weather[0].description[0].toUpperCase()+ dados.weather[0].description.substr(1);
+            if (description == "Céu limpo") {
+                img = "images/ceu_limpo.jpg"; 
+            } else if (description == "Algumas nuvens" || description == "Nublado"){
+                img = "images/ceu_nublado.jpg";
+            } else {
+                img = "images/ceu_chuvoso.jpg";
+            }
+        }
+
     }
 });
